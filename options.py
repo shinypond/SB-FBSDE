@@ -104,7 +104,7 @@ def set():
         torch.backends.cudnn.benchmark = True
         # torch.backends.cudnn.deterministic = True
 
-    torch.set_default_tensor_type('torch.cuda.FloatTensor')
+    # torch.set_default_tensor_type('torch.cuda.FloatTensor')
     # torch.autograd.set_detect_anomaly(True)
     
     # ========= auto setup & path handle =========

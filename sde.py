@@ -310,8 +310,8 @@ def compute_ve_xs_label(opt, x0, sigmas, samp_t_idx):
 
     # p(x_t|x_0) = N(x_0, sigma_t^2)
     # x_t = x_0 + sigma_t * noise
-    noise = torch.randn(batch_x, batch_t, *x_dim)
-    sigma_t = sigmas[samp_t_idx].reshape(1,-1,*([1,]*len(x_dim))) # shape = [1,batch_t,1,1,1]
+    noise = torch.randn(batch_x, batch_t, *x_dim).to(x0.device)
+    sigma_t = sigmas[samp_t_idx].reshape(1,-1,*([1,]*len(x_dim))).to(x0.device) # shape = [1,batch_t,1,1,1]
     analytic_xs = sigma_t * noise + x0[:,None,...]
 
     # score_of_p = -1/sigma_t^2 (x_t - x_0) = -noise/sigma_t
@@ -331,9 +331,9 @@ def compute_vp_xs_label(opt, x0, sqrt_betas, mean_scales, samp_t_idx):
 
     # p(x_t|x_0) = N(mean_scale * x_0, std_t^2)
     # x_t = mean_scale * x_0 + std_t * noise
-    noise = torch.randn(batch_x, batch_t, *x_dim)
-    mean_scale_t = mean_scales[samp_t_idx].reshape(1,-1,*([1,]*len(x_dim))) # shape = [1,batch_t,1,1,1]
-    std_t = torch.sqrt(1 - mean_scale_t**2)
+    noise = torch.randn(batch_x, batch_t, *x_dim).to(x0.device)
+    mean_scale_t = mean_scales[samp_t_idx].reshape(1,-1,*([1,]*len(x_dim))).to(x0.device) # shape = [1,batch_t,1,1,1]
+    std_t = torch.sqrt(1 - mean_scale_t**2).to(x0.device)
     analytic_xs = std_t * noise + mean_scale_t * x0[:,None,...]
 
     # score_of_p = -1/std_t^2 (x_t - mean_scale_t * x_0) = -noise/std_t

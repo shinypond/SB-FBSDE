@@ -233,7 +233,7 @@ class Runner():
 
             optimizer.zero_grad()
 
-            predict = policy(xs,ts)
+            predict = policy(xs, ts.to(xs.device))
 
             loss = F.mse_loss(label.reshape_as(predict), predict)
             loss.backward()
